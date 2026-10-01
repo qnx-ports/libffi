@@ -35,7 +35,7 @@
  * Add support for other OSes later. For now, it is just Linux and Cygwin.
  */
 
-#if defined (__linux__) || defined (__CYGWIN__)
+#if defined (__linux__) || defined (__CYGWIN__) || defined (__QNX__)
 #ifdef __linux__
 #define _GNU_SOURCE 1
 #endif
@@ -55,7 +55,7 @@
 #include <linux/limits.h>
 #include <linux/types.h>
 #endif
-#ifdef __CYGWIN__
+#if defined (__CYGWIN__) || defined (__QNX__)
 #include <limits.h>
 #endif
 #endif
@@ -199,7 +199,7 @@ static struct tramp_globals tramp_globals;
  */
 static int tramp_table_alloc (void);
 
-#if defined (__linux__) || defined (__CYGWIN__)
+#if defined (__linux__) || defined (__CYGWIN__) || defined (__QNX__)
 
 /* Stringify a macro value for use in a scanf field-width specifier.  */
 #define FFI_TRAMP_STR_(x) #x
@@ -268,9 +268,9 @@ ffi_tramp_get_libffi (void)
   return 1;
 }
 
-#endif /* defined (__linux__) || defined (__CYGWIN__) */
+#endif /* defined (__linux__) || defined (__CYGWIN__) || defined (__QNX__) */
 
-#if defined (__linux__) || defined (__CYGWIN__)
+#if defined (__linux__) || defined (__CYGWIN__) || defined (__QNX__)
 
 static int
 ffi_tramp_get_temp_file (void)
@@ -293,11 +293,11 @@ ffi_tramp_get_temp_file (void)
   return 0;
 }
 
-#endif /* defined (__linux__) || defined (__CYGWIN__) */
+#endif /* defined (__linux__) || defined (__CYGWIN__) || defined (__QNX__) */
 
 /* ------------------------ OS-specific Initialization ----------------------*/
 
-#if defined (__linux__) || defined (__CYGWIN__)
+#if defined (__linux__) || defined (__CYGWIN__) || defined (__QNX__)
 
 static int
 ffi_tramp_init_os (void)
@@ -307,11 +307,11 @@ ffi_tramp_init_os (void)
   return ffi_tramp_get_temp_file ();
 }
 
-#endif /* defined (__linux__) || defined (__CYGWIN__) */
+#endif /* defined (__linux__) || defined (__CYGWIN__) || defined (__QNX__) */
 
 /* --------------------------- OS-specific Locking -------------------------*/
 
-#if defined (__linux__) || defined (__CYGWIN__)
+#if defined (__linux__) || defined (__CYGWIN__) || defined (__QNX__)
 
 static pthread_mutex_t tramp_globals_mutex = PTHREAD_MUTEX_INITIALIZER;
 
@@ -327,7 +327,7 @@ ffi_tramp_unlock(void)
   pthread_mutex_unlock (&tramp_globals_mutex);
 }
 
-#endif /* defined (__linux__) || defined (__CYGWIN__) */
+#endif /* defined (__linux__) || defined (__CYGWIN__) || defined (__QNX__) */
 
 /* ------------------------ OS-specific Memory Mapping ----------------------*/
 
@@ -346,7 +346,7 @@ ffi_tramp_unlock(void)
  * sizeof (struct tramp_parm) cannot exceed the size of a parameter block.
  */
 
-#if defined (__linux__) || defined (__CYGWIN__)
+#if defined (__linux__) || defined (__CYGWIN__) || defined (__QNX__)
 
 static int
 tramp_table_map (struct tramp_table *table)
@@ -383,7 +383,7 @@ tramp_table_unmap (struct tramp_table *table)
   (void) munmap (table->parm_table, tramp_globals.map_size);
 }
 
-#endif /* defined (__linux__) || defined (__CYGWIN__) */
+#endif /* defined (__linux__) || defined (__CYGWIN__) || defined (__QNX__) */
 
 /* ------------------------ Trampoline Initialization ----------------------*/
 

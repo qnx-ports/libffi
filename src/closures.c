@@ -135,10 +135,11 @@ ffi_tramp_is_present (__attribute__((unused)) void *ptr)
 #  define FFI_MMAP_EXEC_WRIT 1
 #  define HAVE_MNTENT 1
 # endif
-# if defined(__CYGWIN__) || defined(_WIN32) || defined(__OS2__)
+# if defined(__CYGWIN__) || defined(_WIN32) || defined(__OS2__) || defined(__QNX__)
 /* Windows systems may have Data Execution Protection (DEP) enabled,
    which requires the use of VirtualMalloc/VirtualFree to alloc/free
-   executable memory. */
+   executable memory.  QNX does not mark heap pages executable by
+   default, so it likewise needs the dual-mapped temp-file approach. */
 #  define FFI_MMAP_EXEC_WRIT 1
 # endif
 #endif

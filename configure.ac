@@ -410,7 +410,8 @@ case "$target" in
      ;;
      *arm*-*-linux-* | aarch64*-*-linux-* | i*86-*-linux-* | x86_64-*-linux-* \
      | loongarch*-*-linux-* | s390x*-linux-* | powerpc*-linux-* \
-     | riscv*-linux-*)
+     | riscv*-linux-* \
+     | x86_64-*-nto-qnx* | aarch64*-*-nto-qnx*)
        AC_DEFINE(FFI_EXEC_STATIC_TRAMP, 1,
                  [Define this if you want statically defined trampolines])
      ;;
